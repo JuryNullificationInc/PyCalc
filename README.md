@@ -16,6 +16,12 @@ v receives_from z; v transits_over v.
 v receives_from x; x transits_over x.
 ```
 
+Or, in general:
+
+```
+%value transits_over/receives_from %channel
+```
+
 The interpreter will yield the following stacktrace for this example program:
 ```
 "{'x': {'TRANSMITTING': ['z'], 'LISTENING': [||[<z TRANSMITTING y>, <y LISTENING x>, □]||, ||[<z TRANSMITTING x>, □]||]}, 'z': {'TRANSMITTING': [], 'LISTENING': [||[<v TRANSMITTING v>, □]||]}}", 
