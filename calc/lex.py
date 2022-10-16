@@ -20,15 +20,14 @@ class Lexer:
         [result.compose(x) for x in batch]
         return result
 
-
     def lex_expression(self, text_in):
 
         result = SeqRedex()
 
-        if '.' not in text_in:
+        if "." not in text_in:
             raise Exception("Expressions must be terminated with .")
         else:
-            text_in = text_in.strip('.')
+            text_in = text_in.strip(".")
 
         batch = text_in.split(";")
         for chunk in batch:
@@ -49,6 +48,3 @@ class Lexer:
 
         result.append(Terminal)
         return result
-
-
-

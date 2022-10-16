@@ -1,7 +1,7 @@
 import random
 
-class Process:
 
+class Process:
     def __repr__(self):
         return f"<{self.symbol} {self.status} {self.channel}>"
 
@@ -9,7 +9,11 @@ class Process:
         return f"<{self.symbol} {self.status} {self.channel}>"
 
     def __eq__(self, other):
-        return (self.symbol, self.channel, self.status) == (other.symbol, other.channel, other.status)
+        return (self.symbol, self.channel, self.status) == (
+            other.symbol,
+            other.channel,
+            other.status,
+        )
 
     def __init__(self, symbol, channel, status):
         self.symbol = symbol
@@ -28,7 +32,6 @@ class Process:
 
 
 class TerminalProcess(Process):
-
     def __repr__(self):
         return "□"
 
@@ -42,7 +45,6 @@ class TerminalProcess(Process):
 
 
 class SequentialRedex:
-
     def __repr__(self):
         return f"||{self.processes.__repr__()}||"
 
@@ -78,7 +80,6 @@ class SequentialRedex:
 
 
 class ParallelRedex:
-
     def __repr__(self):
         return f"?{self.redexes.__repr__()}?"
 
@@ -93,7 +94,9 @@ class ParallelRedex:
         if len(self) == len(other):
             for redex in self.redexes:
                 if redex in other.redexes:
-                    truthy.append(True) # needs to be fixed later, this will fail on some edge cases
+                    truthy.append(
+                        True
+                    )  # needs to be fixed later, this will fail on some edge cases
 
         return all(truthy)
 
@@ -105,7 +108,9 @@ class ParallelRedex:
 
     def compose(self, redex):
         if type(redex) != ParallelRedex and type(redex) != SequentialRedex:
-            raise Exception("Parallel Redexes can only be composed with Parallel and Sequential Redexes")
+            raise Exception(
+                "Parallel Redexes can only be composed with Parallel and Sequential Redexes"
+            )
 
         self.redexes.append(redex)
 
@@ -118,17 +123,22 @@ class ParallelRedex:
         channel_equivalence_cells = {}
         for head in heads:
             if head.channel not in channel_equivalence_cells:
-                channel_equivalence_cells[head.channel] = {'TRANSMITTING': [], 'LISTENING': []}
+                channel_equivalence_cells[head.channel] = {
+                    "TRANSMITTING": [],
+                    "LISTENING": [],
+                }
 
             match head.status:
-                case 'TRANSMITTING':
-                    channel_equivalence_cells[head.channel]['TRANSMITTING'] += [head.symbol]
-                case 'LISTENING':
-                    channel_equivalence_cells[head.channel]['LISTENING'] += [head.body]
+                case "TRANSMITTING":
+                    channel_equivalence_cells[head.channel]["TRANSMITTING"] += [
+                        head.symbol
+                    ]
+                case "LISTENING":
+                    channel_equivalence_cells[head.channel]["LISTENING"] += [head.body]
 
         for channel in channel_equivalence_cells:
-            transmitted_values = channel_equivalence_cells[channel]['TRANSMITTING']
-            listening_agents = channel_equivalence_cells[channel]['LISTENING']
+            transmitted_values = channel_equivalence_cells[channel]["TRANSMITTING"]
+            listening_agents = channel_equivalence_cells[channel]["LISTENING"]
             for agent in listening_agents:
                 if not transmitted_values:
                     pass
@@ -149,4 +159,3 @@ class ParallelRedex:
             stacktrace.append(step)
             i += 1
         return stacktrace
-
