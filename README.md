@@ -6,6 +6,26 @@ This is a very bare-bones interpreter that implements the output and input prefi
 
 Currently, I only have a lexer, the process object, and the two reducible expression objects (SequentialRedex, ParallelRedex) necessary for carrying out basic computations, along with a test suite.
 
+## Syntax & Example
+
+As previously stated, only the input and output prefixes are currently implemented. The syntax looks like this:
+```
+z transits_over x.
+y receives_from x; x transits_over y; y receives_from x.
+v receives_from z; v transits_over v.
+v receives_from x; x transits_over x.
+```
+
+The interpreter will yield the following stacktrace for this example program:
+```
+"{'x': {'TRANSMITTING': ['z'], 'LISTENING': [||[<z TRANSMITTING y>, <y LISTENING x>, □]||, ||[<z TRANSMITTING x>, □]||]}, 'z': {'TRANSMITTING': [], 'LISTENING': [||[<v TRANSMITTING v>, □]||]}}", 
+
+"{'y': {'TRANSMITTING': ['z'], 'LISTENING': []}, 'v': {'TRANSMITTING': ['v'], 'LISTENING': []}, 'x': {'TRANSMITTING': ['z'], 'LISTENING': []}}", 
+
+"{'x': {'TRANSMITTING': [], 'LISTENING': [||[□]||]}}"
+```
+(I cleaned it up a bit for the readme)
+
 ## Why Do This?
 
 This is purely a weekend-only passion project for an undergrad that expects to graduate soon.
