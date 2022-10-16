@@ -22,6 +22,8 @@ Or, in general:
 %value transits_over/receives_from %channel
 ```
 
+The transits_over keyword is output prefixing. The receives_from keyword is input prefixing. Semicolons denote process prefixing; periods denote termination.
+
 The interpreter will yield the following stacktrace for this example program:
 ```
 "{'x': {'TRANSMITTING': ['z'], 'LISTENING': [||[<z TRANSMITTING y>, <y LISTENING x>, □]||, ||[<z TRANSMITTING x>, □]||]}, 'z': {'TRANSMITTING': [], 'LISTENING': [||[<v TRANSMITTING v>, □]||]}}", 
